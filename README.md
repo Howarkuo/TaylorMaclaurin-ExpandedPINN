@@ -15,7 +15,7 @@ In chemical kinetics, the simplest ordinary differential equation (ODE) is a fir
 $$\frac{d[A]}{dt} = -k[A]$$
 
 The analytical solution to this ODE is an exponential function: 
-$\left[A\right](t) = [A]_0 e^{-kt}$
+$\left\[A\right](t) = [A]_0 e^{-kt}$
 This is why $e^x$ is the backbone of modeling concentration profiles over time.
 
 ### Taylor Series in the PINN Paper

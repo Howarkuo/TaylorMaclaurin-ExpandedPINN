@@ -1,4 +1,6 @@
 # TaylorMaclaurin-ExpandedPINN
+<img width="1694" height="975" alt="Screenshot 2026-05-13 at 11 08 22 AM" src="https://github.com/user-attachments/assets/76b4fdea-e6a1-4f50-9462-5b649b9843aa" />
+
 
 ## Augmented PINN with PyTorch
 

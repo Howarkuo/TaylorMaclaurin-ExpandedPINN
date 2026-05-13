@@ -15,8 +15,7 @@ In chemical kinetics, the simplest ordinary differential equation (ODE) is a fir
 $$\frac{d[A]}{dt} = -k[A]$$
 
 The analytical solution to this ODE is an exponential function: 
-$$[A](t) = [A]_0 e^{-kt}$$
-
+$$\left[A\right](t) = [A]_0 e^{-kt}$$
 This is why $e^x$ is the backbone of modeling concentration profiles over time.
 
 ### Taylor Series in the PINN Paper
@@ -37,6 +36,33 @@ Here is where your two properties act toghether for the expansion:
 
 Plugging $1$ into every numerator of the general formula gives us the beautiful, simple series for $e^x$:
 $$e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \dots = \sum_{n=0}^{\infty} \frac{x^n}{n!}$$
+
+### 2. Connecting the Math to the ODE (Equation 10 & 11)
+
+The general Taylor series maps directly to the PINN's chemical rate functional ($K_F$) as it changes with temperature ($T$).
+
+* **Math World ($x$):** The variable under evaluation.
+* **Chemistry World ($T$):** The actual temperature of the reaction (e.g., **35°C**).
+* **Math Base ($a$):** The chosen reference point.
+* **Chemistry Base ($T_0$):** The standard reference temperature (e.g., room temperature, **25°C**).
+* **Math Delta $(x - a)$:** The distance from the base.
+* **Chemistry Delta $(\Delta T)$:** The difference between the actual and reference temperature $(T - T_0)$.
+
+Substituting the chemical parameters into the general Taylor series yields the exact transformation applied to the ODEs:
+
+$$K_F(T) \approx K_F(T_0) + K_F'(T_0)(T - T_0) + \frac{K_F''(T_0)}{2!}(T - T_0)^2$$
+
+---
+
+### 3. Application of the Taylor Series in PINN Implementation
+
+In applied chemical kinetics, the exact, complex equation governing a catalyst's behavior at an arbitrary temperature (e.g., **35°C**) is often unknown. However, experimental data is typically available for its behavior at a base state, such as **25°C** ($T_0$).
+
+Instead of requiring the neural network to learn the entire complex Arrhenius equation from scratch, the Augmented PINN leverages the Taylor series approach:
+
+> By establishing the baseline reaction rate at **25°C**, the neural network is trained to learn only the derivatives (the coefficients). This allows the model to predict how the reaction rate shifts when the system deviates from the baseline temperature.
+
+In a PyTorch implementation, these Taylor series derivatives ($K_F(T_0)$, $K_F'(T_0)$, etc.) serve directly as the `nn.Parameter` weights optimized during training. The algorithm adjusts these weights until the $(T - T_0)$ polynomial expansion aligns precisely with the noisy experimental data.
 
 ---
 

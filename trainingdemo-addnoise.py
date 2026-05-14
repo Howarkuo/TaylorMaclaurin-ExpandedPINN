@@ -84,7 +84,7 @@ for T in training_temperatures:
 # =====================================================================
 df_training = pd.DataFrame(all_data)
 
-# You would typically export this to CSV for your ML pipeline:
+# Would typically export this to CSV for ML pipeline:
 # df_training.to_csv('catalytic_training_data.csv', index=False)
 
 print("Data generation complete! Here is a preview of the structured dataset:\n")
